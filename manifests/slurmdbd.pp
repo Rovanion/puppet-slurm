@@ -185,7 +185,7 @@ inherits slurm
       before   => File[$slurm::params::dbd_configfile],
     }
     # Eventually create the 'slurm'@'*' user with all rights
-    unique([ $storagehost, $::hostname, $::fqdn]).each |String $host| {
+    unique([ $storagehost, $::hostname, $::fqdn].delete($dbdhost)).each |String $host| {
       mysql_user { "${storageuser}@${host}":
         password_hash => mysql_password($storagepass),
       }
